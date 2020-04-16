@@ -47,12 +47,12 @@ class MeinNetz(nn.Module):
         i = 0
         for name, param in self.named_parameters():
             if 'weight' in name:
-                W = torch.tensor(parameters['W{:d}'.format(i)])
+                W_bar = torch.tensor(parameters['W{:d}_bar'.format(i)])
                 Y = torch.tensor(parameters['Y{:d}'.format(i)])
                 if Lip_loss is None:
-                    Lip_loss =  rho/2 * torch.sum((param-W)**2) + torch.trace(torch.matmul(Y.t(),(param-W)))
+                    Lip_loss =  rho/2 * torch.sum((param-W_bar)**2) + torch.trace(torch.matmul(Y.t(),(param-W_bar)))
                 else:
-                    Lip_loss = Lip_loss +  rho/2 * torch.sum((param-W)**2) + torch.trace(torch.matmul(Y.t(),(param-W)))
+                    Lip_loss = Lip_loss +  rho/2 * torch.sum((param-W_bar)**2) + torch.trace(torch.matmul(Y.t(),(param-W_bar)))
                 i += 1
         return Lip_loss
 
